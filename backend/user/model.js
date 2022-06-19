@@ -11,12 +11,21 @@ User.init({
         autoIncrement: true,
         primaryKey: true
     },
-    username:{
+    name: {
         type: DataTypes.STRING
-   
     },
-    password:{
+    matricula: {
         type: DataTypes.STRING
+    },
+    login: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false
+
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 },{sequelize, modelName : "user"})
 

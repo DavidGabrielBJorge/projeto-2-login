@@ -14,15 +14,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+const LocalPass = require('./config/passport');
 
 User.sync({force: true}).then(()=>{
     console.log("Deu certo a criação do banco")
 })
 
 app.use(cors({
-    origin: "http://localhost:3001",
+    origin: "http://localhost:3003",
     credentials:true
 }))
+
+
+LocalPass.configuration();
 
 app.use(session({
     secret: "secretcode",
@@ -30,17 +34,19 @@ app.use(session({
     saveUninitialized: true
 }))
 
+app.use(LocalPass.passport.initialize());
+app.use(LocalPass.passport.session());
+
 app.use(cookieParser("secretcode"))
 
-app.post("/login",(req,res)=>{
-    console.log(req.body);
-})
+app.post('/login', LocalPass.passport.authenticate('local', {
+    successRedirect: 'http://localhost:3003',
+    failureRedirect: 'http://localhost:3003'
+}));
 
-app.post("/register",(req,res)=>{
-    console.log(req.body);
-})
 
-app.get("/user", (req,res)=>{})
+
+require('./user/routes')(app)
 
 var server = app.listen(4000, () =>{
     console.log("Servidor rodando na porta : 4000 no host : "+ server.address().address)
