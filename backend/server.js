@@ -16,12 +16,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const LocalPass = require('./config/passport');
 
+
 User.sync({force: true}).then(()=>{
     console.log("Deu certo a criação do banco")
 })
 
 app.use(cors({
-    origin: "http://localhost:3003",
+    origin: "http://localhost:3006",
     credentials:true
 }))
 
@@ -40,14 +41,14 @@ app.use(LocalPass.passport.session());
 app.use(cookieParser("secretcode"))
 
 app.post('/login', LocalPass.passport.authenticate('local', {
-    successRedirect: 'http://localhost:3003',
-    failureRedirect: 'http://localhost:3003'
+    successRedirect: 'https://www.google.com/',
+    failureRedirect: 'https://www.google.com/'
 }));
 
 
 
 require('./user/routes')(app)
 
-var server = app.listen(4000, () =>{
-    console.log("Servidor rodando na porta : 4000 no host : "+ server.address().address)
+var server = app.listen(3005, () =>{
+    console.log("Servidor rodando na porta : 3005 no host : "+ server.address().address)
 })

@@ -13,12 +13,19 @@ function App() {
     console.log("register do App.js");
     axios({
       method: "POST",
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        'Content-Type': 'application/json',
+    },
       data:{
         login: login,
-        password: password
+        password: password,
+        done: done
       },
+      
       withCredentials:true,
-      url: "http://localhost:4000/login"
+      url: "http://localhost:3005/login"
     }).then((res)=> console.log(res));
   }
    /*  ===============Funcao para logar=============== */

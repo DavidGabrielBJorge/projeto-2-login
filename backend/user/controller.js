@@ -8,7 +8,7 @@ const { username } = require('../config/database');
 
 /*
 Função para criar o usuário
-http://localhost:4000/usuario
+http://localhost:3005/usuario
 
 =>Criar
 {
